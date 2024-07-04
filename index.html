@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Electron OAuth Example</title>
+    <!-- Include Ionic CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+    <link rel="stylesheet" type="text/css" href="global.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+    <ion-app>
+        <ion-content>
+            <div class="text-container">
+            <h1>Welcome!</h1>
+            <div id="status"></div>
+            <div id="token-status"></div>
+            <ion-button id="logout">Logout</ion-button>
+            </div>
+        </ion-content>
+    </ion-app>
+    <!-- Include Ionic JS -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

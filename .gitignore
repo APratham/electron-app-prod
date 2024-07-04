@@ -1,0 +1,74 @@
+# Node - Dependency directories
+node_modules/
+
+# Ionic/Angular - Distribution / build output
+www/
+dist/
+build/
+out-tsc/
+
+# Angular files
+.angular-cache/
+.angular/
+*.log
+
+# Electron-packaged application
+release/
+*.log
+
+# Android specific - Ignoring build folders and Gradle files
+android/app/build/
+*.keystore
+*.jks
+!gradle/wrapper/gradle-wrapper.jar
+
+# iOS specific - Ignoring build folders
+ios/build/
+ios/Pods/
+
+# FastAPI/Python - General Python ignores
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE specific settings
+.vscode/
+.idea/
+*.sublime-workspace
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Others
+secrets.json
+.c9/
+
+# Docker - if using Docker, ignore unnecessary files
+.dockerignore
+Dockerfile
+
+# Uvicorn logs
+*.log
+
+# Cache files for PyCharm
+.idea/
+*.iml
+
+# Local development configuration file
+config.ini
