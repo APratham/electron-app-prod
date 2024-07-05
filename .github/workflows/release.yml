@@ -180,7 +180,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TARGET_REPO_PAT }}
         with:
-          repository: target_owner/target_repo
+          repository: APratham/electron-app
           tag_name: ${{ env.TAG_NAME }}
           release_name: Release ${{ env.TAG_NAME }}
           body_path: ./release-notes.md
@@ -192,7 +192,7 @@ jobs:
           for file in ./dist/*.{dmg,exe,deb,AppImage,zip,blockmap,.tar.gz,yml}; do
             if [ -f "$file" ]; then
               echo "Uploading $file"
-              gh release upload $TAG_NAME "$file" --clobber --repo target_owner/target_repo
+              gh release upload $TAG_NAME "$file" --clobber --repo APratham/electron-app
             fi
           done
         env:
@@ -203,9 +203,9 @@ jobs:
           for file in ./dist/dist/*.{dmg,exe,deb,AppImage,zip,blockmap,.tar.gz,yml}; do
             if [ -f "$file" ]; then
               echo "Uploading $file"
-              gh release upload $TAG_NAME "$file" --clobber --repo target_owner/target_repo
+              gh release upload $TAG_NAME "$file" --clobber --repo APratham/electron-app
             fi
           done
         env:
           GITHUB_TOKEN: ${{ secrets.TARGET_REPO_PAT }}
-          
+
