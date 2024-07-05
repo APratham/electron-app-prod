@@ -182,7 +182,7 @@ jobs:
         with:
           repository: APratham/electron-app
           tag_name: ${{ env.TAG_NAME }}
-          release_name: Release ${{ env.TAG_NAME }}
+          release_name: "Release ${{ env.TAG_NAME }}"
           body_path: ./release-notes.md
           draft: false
           prerelease: false
@@ -208,4 +208,3 @@ jobs:
           done
         env:
           GITHUB_TOKEN: ${{ secrets.TARGET_REPO_PAT }}
-
