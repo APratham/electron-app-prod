@@ -97,6 +97,12 @@ jobs:
           token: ${{ secrets.TARGET_REPO_PAT }}
           persist-credentials: false
 
+      - name: Configure Git for pushing
+        run: |
+          git config --global user.email "a.pratham1998@gmail.com"
+          git config --global user.name "APratham"
+          git remote set-url origin https://${{ secrets.TARGET_REPO_PAT }}@github.com/target_owner/target_repo.git
+
       - name: Push the tag to the target repository
         run: |
           git tag $TAG_NAME
