@@ -38,12 +38,13 @@ jobs:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           npm run clean
-          if [[ "$RUNNER_OS" == "macOS" ]]; then
+          if [ "$RUNNER_OS" = "macOS" ]; then
             echo "Running build for macOS"
             npm run dist:mac
-          elif [[ "$RUNNER_OS" == "Linux" ]]; then
+          elif [ "$RUNNER_OS" = "Linux" ]; then
             echo "Running build for Linux"
             npm run dist:linux
+          fi
         shell: bash
 
       - name: Clean and build on Windows
@@ -101,7 +102,7 @@ jobs:
           git config --global user.email "a.pratham1998@gmail.com"
           git config --global user.name "APratham"
           git remote set-url origin https://${{ secrets.TARGET_REPO_PAT }}@github.com/APratham/electron-app.git
-          
+
       - name: Push the tag to the target repository
         run: |
           git tag $TAG_NAME
@@ -114,7 +115,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install gh
-          
+
       - name: Download Ubuntu artifacts
         uses: actions/download-artifact@v3
         with:
@@ -142,7 +143,7 @@ jobs:
           ls -l ./dist/ubuntu/
           ls -l ./dist/macos/
           ls -l ./dist/windows/
-          
+
       - name: Unzip artifacts
         run: |
           echo "Unzipping Ubuntu artifacts"
@@ -169,7 +170,7 @@ jobs:
         run: |
           echo "Listing unzipped contents:"
           ls -l ./dist/
-          
+
       - name: Create release notes
         run: echo "Release notes for version $TAG_NAME" > release-notes.md
 
