@@ -44,7 +44,6 @@ jobs:
           elif [[ "$RUNNER_OS" == "Linux" ]]; then
             echo "Running build for Linux"
             npm run dist:linux
-          fi
         shell: bash
 
       - name: Clean and build on Windows
@@ -102,7 +101,7 @@ jobs:
           git config --global user.email "a.pratham1998@gmail.com"
           git config --global user.name "APratham"
           git remote set-url origin https://${{ secrets.TARGET_REPO_PAT }}@github.com/APratham/electron-app.git
-
+          
       - name: Push the tag to the target repository
         run: |
           git tag $TAG_NAME
@@ -115,7 +114,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install gh
-
+          
       - name: Download Ubuntu artifacts
         uses: actions/download-artifact@v3
         with:
@@ -143,7 +142,7 @@ jobs:
           ls -l ./dist/ubuntu/
           ls -l ./dist/macos/
           ls -l ./dist/windows/
-
+          
       - name: Unzip artifacts
         run: |
           echo "Unzipping Ubuntu artifacts"
@@ -170,11 +169,11 @@ jobs:
         run: |
           echo "Listing unzipped contents:"
           ls -l ./dist/
-
+          
       - name: Create release notes
         run: echo "Release notes for version $TAG_NAME" > release-notes.md
 
-      - name: Create GitHub Release
+      - name: Create GitHub Release in target repository
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -187,7 +186,7 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Upload release assets
+      - name: Upload release assets to target repository
         run: |
           for file in ./dist/*.{dmg,exe,deb,AppImage,zip,blockmap,.tar.gz,yml}; do
             if [ -f "$file" ]; then
@@ -198,7 +197,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TARGET_REPO_PAT }}
 
-      - name: Upload release assets from nested dist
+      - name: Upload release assets from nested dist to target repository
         run: |
           for file in ./dist/dist/*.{dmg,exe,deb,AppImage,zip,blockmap,.tar.gz,yml}; do
             if [ -f "$file" ]; then
