@@ -72,7 +72,7 @@ jobs:
         shell: pwsh
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.os }}-dist
           path: dist-${{ matrix.os }}.zip
@@ -81,15 +81,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Checkout source repository
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-
-      - name: Get the tag name
-        id: get_tag_name
-        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-
       - name: Checkout target repository
         uses: actions/checkout@v4
         with:
@@ -97,12 +88,15 @@ jobs:
           token: ${{ secrets.TARGET_REPO_PAT }}
           persist-credentials: false
 
+      - name: Get the tag name
+        id: get_tag_name
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
       - name: Configure Git for pushing
         run: |
           git config --global user.email "a.pratham1998@gmail.com"
           git config --global user.name "APratham"
           git remote set-url origin https://${{ secrets.TARGET_REPO_PAT }}@github.com/APratham/electron-app.git
-
       - name: Push the tag to the target repository
         run: |
           git tag $TAG_NAME
@@ -115,25 +109,31 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install gh
-
       - name: Download Ubuntu artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ubuntu-latest-dist
           path: ./dist/ubuntu/
 
       - name: Download macOS artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: macos-latest-dist
           path: ./dist/macos/
 
       - name: Download Windows artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: windows-latest-dist
           path: ./dist/windows/
 
+      - name: Log downloaded artifacts
+        run: |
+          echo "Listing downloaded artifacts:"
+          ls -l ./dist/ubuntu/
+          ls -l ./dist/macos/
+          ls -l ./dist/windows/
+          
       - name: Unzip artifacts
         run: |
           echo "Unzipping Ubuntu artifacts"
@@ -142,6 +142,7 @@ jobs:
           unzip -o './dist/macos/dist-macos-latest.zip' -d ./dist/
           echo "Unzipping Windows artifacts"
           unzip -o './dist/windows/dist-windows-latest.zip' -d ./dist/
+        continue-on-error: true
 
       - name: Log unzipped contents
         run: |
@@ -153,11 +154,10 @@ jobs:
 
       - name: Create GitHub Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.TARGET_REPO_PAT }}
         with:
-          repository: APratham/electron-app
           tag_name: ${{ env.TAG_NAME }}
           release_name: "Release ${{ env.TAG_NAME }}"
           body_path: ./release-notes.md
