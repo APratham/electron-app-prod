@@ -97,6 +97,7 @@ jobs:
           git config --global user.email "a.pratham1998@gmail.com"
           git config --global user.name "APratham"
           git remote set-url origin https://${{ secrets.TARGET_REPO_PAT }}@github.com/APratham/electron-app.git
+
       - name: Push the tag to the target repository
         run: |
           git tag $TAG_NAME
@@ -109,6 +110,19 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install gh
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TARGET_REPO_PAT }}
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+          release_name: "Release ${{ env.TAG_NAME }}"
+          body: "Release notes for version $TAG_NAME"
+          draft: false
+          prerelease: false
+
       - name: Download Ubuntu artifacts
         uses: actions/download-artifact@v4
         with:
@@ -133,7 +147,7 @@ jobs:
           ls -l ./dist/ubuntu/
           ls -l ./dist/macos/
           ls -l ./dist/windows/
-          
+
       - name: Unzip artifacts
         run: |
           echo "Unzipping Ubuntu artifacts"
@@ -149,27 +163,24 @@ jobs:
           echo "Listing unzipped contents:"
           ls -l ./dist/
 
-      - name: Create release notes
-        run: echo "Release notes for version $TAG_NAME" > release-notes.md
-
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: List existing release assets
+        id: list_assets
+        run: |
+          gh release view ${{ env.TAG_NAME }} --json assets --jq '.assets[].name' > existing_assets.txt
         env:
           GITHUB_TOKEN: ${{ secrets.TARGET_REPO_PAT }}
-        with:
-          tag_name: ${{ env.TAG_NAME }}
-          release_name: "Release ${{ env.TAG_NAME }}"
-          body_path: ./release-notes.md
-          draft: false
-          prerelease: false
 
       - name: Upload release assets
         run: |
           for file in ./dist/*.{dmg,exe,deb,AppImage,zip,blockmap,.tar.gz,yml}; do
             if [ -f "$file" ]; then
-              echo "Uploading $file"
-              gh release upload $TAG_NAME "$file" --clobber --repo APratham/electron-app
+              filename=$(basename "$file")
+              if ! grep -qx "$filename" existing_assets.txt; then
+                echo "Uploading $file"
+                gh release upload $TAG_NAME "$file" --clobber --repo APratham/electron-app
+              else
+                echo "$file already exists in the release"
+              fi
             fi
           done
         env:
@@ -179,8 +190,13 @@ jobs:
         run: |
           for file in ./dist/dist/*.{dmg,exe,deb,AppImage,zip,blockmap,.tar.gz,yml}; do
             if [ -f "$file" ]; then
-              echo "Uploading $file"
-              gh release upload $TAG_NAME "$file" --clobber --repo APratham/electron-app
+              filename=$(basename "$file")
+              if ! grep -qx "$filename" existing_assets.txt; then
+                echo "Uploading $file"
+                gh release upload $TAG_NAME "$file" --clobber --repo APratham/electron-app
+              else
+                echo "$file already exists in the release"
+              fi
             fi
           done
         env:
