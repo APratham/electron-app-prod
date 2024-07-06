@@ -57,7 +57,7 @@
     "electron-rebuild": "^3.2.9"
   },
   "build": {
-    "appId": "com.apratham.testrepo",
+    "appId": "com.apratham.electronapp",
     "productName": "Electron OAuth App",
     "directories": {
       "output": "dist"

@@ -1,4 +1,3 @@
-
 name: Release
 
 on:
@@ -103,6 +102,7 @@ jobs:
           git config --global user.email "a.pratham1998@gmail.com"
           git config --global user.name "APratham"
           git remote set-url origin https://${{ secrets.TARGET_REPO_PAT }}@github.com/APratham/electron-app.git
+
       - name: Push the tag to the target repository
         run: |
           git tag $TAG_NAME
@@ -115,59 +115,39 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install gh
+
       - name: Download Ubuntu artifacts
         uses: actions/download-artifact@v3
         with:
           name: ubuntu-latest-dist
           path: ./dist/ubuntu/
-        continue-on-error: true
 
       - name: Download macOS artifacts
         uses: actions/download-artifact@v3
         with:
           name: macos-latest-dist
           path: ./dist/macos/
-        continue-on-error: true
 
       - name: Download Windows artifacts
         uses: actions/download-artifact@v3
         with:
           name: windows-latest-dist
           path: ./dist/windows/
-        continue-on-error: true
 
-      - name: Log downloaded artifacts
-        run: |
-          echo "Listing downloaded artifacts:"
-          ls -l ./dist/ubuntu/
-          ls -l ./dist/macos/
-          ls -l ./dist/windows/
       - name: Unzip artifacts
         run: |
           echo "Unzipping Ubuntu artifacts"
-          if [ -f ./dist/ubuntu/dist-ubuntu-latest.zip ]; then
-            unzip -o './dist/ubuntu/dist-ubuntu-latest.zip' -d ./dist/
-          else
-            echo "No Ubuntu artifacts found"
-          fi
+          unzip -o './dist/ubuntu/dist-ubuntu-latest.zip' -d ./dist/
           echo "Unzipping macOS artifacts"
-          if [ -f ./dist/macos/dist-macos-latest.zip ]; then
-            unzip -o './dist/macos/dist-macos-latest.zip' -d ./dist/
-          else
-            echo "No macOS artifacts found"
-          fi
+          unzip -o './dist/macos/dist-macos-latest.zip' -d ./dist/
           echo "Unzipping Windows artifacts"
-          if [ -f ./dist/windows/dist-windows-latest.zip ]; then
-            unzip -o './dist/windows/dist-windows-latest.zip' -d ./dist/
-          else
-            echo "No Windows artifacts found"
-          fi
-        continue-on-error: true
+          unzip -o './dist/windows/dist-windows-latest.zip' -d ./dist/
 
       - name: Log unzipped contents
         run: |
           echo "Listing unzipped contents:"
           ls -l ./dist/
+
       - name: Create release notes
         run: echo "Release notes for version $TAG_NAME" > release-notes.md
 
