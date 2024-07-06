@@ -41,7 +41,6 @@ jobs:
           if [[ "$RUNNER_OS" == "macOS" ]]; then
             echo "Running build for macOS"
             npm run dist:mac
-            xattr -dr com.apple.quarantine /Applications/Electron\ OAuth\ App.app
           elif [[ "$RUNNER_OS" == "Linux" ]]; then
             echo "Running build for Linux"
             npm run dist:linux
@@ -102,10 +101,30 @@ jobs:
       - name: Generate release notes
         run: |
           PREV_TAG=$(git describe --tags --abbrev=0 ${{ env.TAG_NAME }}^)
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's/^refs\/tags\///' -e 's/^v//')
           echo "Release notes for version ${{ env.TAG_NAME }}" > release-notes.md
           echo "" >> release-notes.md
-          echo "## Changes since $PREV_TAG" >> release-notes.md
-          git log $PREV_TAG..${{ env.TAG_NAME }} --pretty=format:"- %s" >> release-notes.md
+          PREV_TAG=$(git describe --tags --abbrev=0 ${{ env.TAG_NAME }}^ 2>/dev/null || echo "")
+          if [ -n "$PREV_TAG" ]; then
+            echo "## Changes since $PREV_TAG" >> release-notes.md
+            git log $PREV_TAG..${{ env.TAG_NAME }} --pretty=format:"- %s" >> release-notes.md
+          else
+            echo "## First Release" >> release-notes.md
+          fi
+          echo "" >> release-notes.md
+          echo "## Available Files and How to Use Them" >> release-notes.md
+          echo "- **Electron.OAuth.App.Setup.${VERSION}.exe**: Can be used by amd64 and x86-64 on Windows." >> release-notes.md
+          echo "- **Electron.OAuth.App-${VERSION}.dmg**: Can be used on macOS. To run the application, you may need to delete the attributes file using:" >> release-notes.md
+          echo "  ```" >> release-notes.md
+          echo "  xattr -d com.apple.quarantine /Applications/Electron \OAuth \App.app"" >> release-notes.md
+          echo "  ```" >> release-notes.md
+          echo "- **Electron.OAuth.App-${VERSION}.deb**: Can be used on Linux distributions that support .deb packages." >> release-notes.md
+          echo "- **Electron.OAuth.App-${VERSION}.AppImage**: Can be used on Linux distributions. Make the file executable and run it." >> release-notes.md
+          echo "- **Electron.OAuth.App-${VERSION}-mac.zip**: Contains the macOS application binaries." >> release-notes.md
+          echo "- **Electron.OAuth.App-${VERSION}-win.zip**: Contains the Windows application binaries." >> release-notes.md
+          echo "- **Electron.OAuth.App-${VERSION}-linux.zip**: Contains the Linux application binaries." >> release-notes.md
+        env:
+          TAG_NAME: ${{ github.ref }}
         continue-on-error: true  
 
       - name: Push the tag to the target repository
