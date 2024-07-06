@@ -124,6 +124,13 @@
       "category": "Utility",
       "maintainer": "APratham <a.pratham1998@gmail.com>"
     },
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://github.com/APratham/electron-app/releases",
+        "sha512": true
+      }
+    ],
     "generateUpdatesFilesForAllChannels": true
   }
 }
