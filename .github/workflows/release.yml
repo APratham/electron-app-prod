@@ -123,9 +123,9 @@ jobs:
           echo "## Available Files and How to Use Them" >> release-notes.md
           echo "- **Electron.OAuth.App.Setup.${VERSION}.exe**: Can be used by amd64 and x86-64 on Windows." >> release-notes.md
           echo "- **Electron.OAuth.App-${VERSION}.dmg**: Can be used on macOS. To run the application, you may need to delete the attributes file using:" >> release-notes.md
-          echo "  ```" >> release-notes.md
-          echo "  xattr -d com.apple.quarantine /Applications/Electron \OAuth \App.app"" >> release-notes.md
-          echo "  ```" >> release-notes.md
+          echo "  \`\`\`" >> release-notes.md
+          echo "  xattr -d com.apple.quarantine /Applications/Electron\\ OAuth\\ App.app" >> release-notes.md
+          echo "  \`\`\`" >> release-notes.md
           echo "- **Electron.OAuth.App-${VERSION}.deb**: Can be used on Linux distributions that support .deb packages." >> release-notes.md
           echo "- **Electron.OAuth.App-${VERSION}.AppImage**: Can be used on Linux distributions. Make the file executable and run it." >> release-notes.md
           echo "- **Electron.OAuth.App-${VERSION}-mac.zip**: Contains the macOS application binaries." >> release-notes.md
@@ -133,7 +133,7 @@ jobs:
           echo "- **Electron.OAuth.App-${VERSION}-linux.zip**: Contains the Linux application binaries." >> release-notes.md
         env:
           TAG_NAME: ${{ github.ref }}
-        continue-on-error: true  
+        continue-on-error: true
 
       - name: Push the tag to the target repository
         run: |
