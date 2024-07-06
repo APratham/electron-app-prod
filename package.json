@@ -126,8 +126,6 @@
     },
     "publish": [
       {
-        "provider": "generic",
-        "url": "https://github.com/APratham/electron-app/releases",
         "sha512": true
       }
     ],
