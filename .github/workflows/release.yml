@@ -110,7 +110,7 @@ jobs:
       - name: Generate release notes
         run: |
           VERSION=$(echo "${{ github.ref }}" | sed -e 's/^refs\/tags\///' -e 's/^v//')
-          echo "Release notes for version ${{ env.TAG_NAME }}" > release-notes.md
+          echo "Release notes for version $VERSION" > release-notes.md
           echo "" >> release-notes.md
           PREV_TAG=$(git describe --tags --abbrev=0 ${{ env.TAG_NAME }}^ 2>/dev/null || echo "")
           if [ -n "$PREV_TAG" ]; then

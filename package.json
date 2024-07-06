@@ -123,6 +123,7 @@
       ],
       "category": "Utility",
       "maintainer": "APratham <a.pratham1998@gmail.com>"
-    }
+    },
+    "generateUpdatesFilesForAllChannels": true
   }
 }
