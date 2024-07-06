@@ -73,7 +73,7 @@ jobs:
         shell: pwsh
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.os }}-dist
           path: dist-${{ matrix.os }}.zip
@@ -151,24 +151,24 @@ jobs:
       - name: Create GitHub Release
         id: create_release
         run: |
-          gh release create ${{ env.TAG_NAME }} --repo APratham/electron-app --title "Release ${{ env.TAG_NAME }}" 
+          gh release create ${{ env.TAG_NAME }} --repo APratham/electron-app --title "Release ${{ env.TAG_NAME }}" --notes-file release-notes.md
         env:
           GITHUB_TOKEN: ${{ secrets.TARGET_REPO_PAT }}
 
       - name: Download Ubuntu artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ubuntu-latest-dist
           path: ./dist/ubuntu/
 
       - name: Download macOS artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: macos-latest-dist
           path: ./dist/macos/
 
       - name: Download Windows artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: windows-latest-dist
           path: ./dist/windows/
@@ -233,4 +233,3 @@ jobs:
           done
         env:
           GITHUB_TOKEN: ${{ secrets.TARGET_REPO_PAT }}
-          
