@@ -41,6 +41,7 @@ jobs:
           if [[ "$RUNNER_OS" == "macOS" ]]; then
             echo "Running build for macOS"
             npm run dist:mac
+            xattr -dr com.apple.quarantine /Applications/Electron\ OAuth\ App.app
           elif [[ "$RUNNER_OS" == "Linux" ]]; then
             echo "Running build for Linux"
             npm run dist:linux
