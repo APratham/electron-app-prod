@@ -123,12 +123,6 @@
       ],
       "category": "Utility",
       "maintainer": "APratham <a.pratham1998@gmail.com>"
-    },
-    "publish": [
-      {
-        "sha512": true
-      }
-    ],
-    "generateUpdatesFilesForAllChannels": true
+    }
   }
 }
