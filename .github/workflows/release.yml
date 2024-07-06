@@ -98,6 +98,14 @@ jobs:
           git config --global user.name "APratham"
           git remote set-url origin https://${{ secrets.TARGET_REPO_PAT }}@github.com/APratham/electron-app.git
 
+      - name: Generate release notes
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 ${{ env.TAG_NAME }}^)
+          echo "Release notes for version ${{ env.TAG_NAME }}" > release-notes.md
+          echo "" >> release-notes.md
+          echo "## Changes since $PREV_TAG" >> release-notes.md
+          git log $PREV_TAG..${{ env.TAG_NAME }} --pretty=format:"- %s" >> release-notes.md
+
       - name: Push the tag to the target repository
         run: |
           git tag $TAG_NAME
@@ -114,7 +122,7 @@ jobs:
       - name: Create GitHub Release
         id: create_release
         run: |
-          gh release create ${{ env.TAG_NAME }} --repo APratham/electron-app --title "Release ${{ env.TAG_NAME }}" --notes "Release notes for version ${{ env.TAG_NAME }}"
+          gh release create ${{ env.TAG_NAME }} --repo APratham/electron-app --title "Release ${{ env.TAG_NAME }}" --notes-file release-notes.md
         env:
           GITHUB_TOKEN: ${{ secrets.TARGET_REPO_PAT }}
 
