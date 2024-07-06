@@ -105,6 +105,7 @@ jobs:
           echo "" >> release-notes.md
           echo "## Changes since $PREV_TAG" >> release-notes.md
           git log $PREV_TAG..${{ env.TAG_NAME }} --pretty=format:"- %s" >> release-notes.md
+        continue-on-error: true  
 
       - name: Push the tag to the target repository
         run: |
