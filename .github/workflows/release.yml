@@ -98,9 +98,16 @@ jobs:
           git config --global user.name "APratham"
           git remote set-url origin https://${{ secrets.TARGET_REPO_PAT }}@github.com/APratham/electron-app.git
 
+      - name: Look for previous releases
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 ${{ env.TAG_NAME }}^ 2>/dev/null || echo "")
+          echo "Previous tag: $PREV_TAG"
+        env:
+          TAG_NAME: ${{ env.TAG_NAME }}  
+        continue-on-error: true    
+
       - name: Generate release notes
         run: |
-          PREV_TAG=$(git describe --tags --abbrev=0 ${{ env.TAG_NAME }}^)
           VERSION=$(echo "${{ github.ref }}" | sed -e 's/^refs\/tags\///' -e 's/^v//')
           echo "Release notes for version ${{ env.TAG_NAME }}" > release-notes.md
           echo "" >> release-notes.md
