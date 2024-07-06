@@ -117,16 +117,16 @@ jobs:
             echo "## Changes since $PREV_TAG" >> release-notes.md
             git log $PREV_TAG..${{ env.TAG_NAME }} --pretty=format:"- %s" >> release-notes.md
           else
-            echo "## First Release" >> release-notes.md
+            echo "## First Release 🎉" >> release-notes.md
           fi
           cat << EOF >> release-notes.md
-          ## Available Files and How to Use Them" >> release-notes.md
+          ## Available Files and How to Use Them
           - **electron-oauth-app_${VERSION}_amd64.deb**: Can be used on Linux distributions with x64 architecture that support .deb packages.
           - **electron-oauth-app_${VERSION}_arm64.deb**: Can be used on Linux distributions with arm64 architecture that support .deb packages.
           - **Electron.OAuth.App-${VERSION}.AppImage**: Can be used on Linux distributions with x63 architecture and support for .AppImage files. .AppImage files are self-contained and do not require installation.
           - **Electron.OAuth.App-${VERSION}-arm64.AppImage**: Can be used on Linux distributions with arm64 architecture and support for .AppImage files. .AppImage files are self-contained and do not require installation.
           - **Electron.OAuth.App-${VERSION}.dmg**: Can be used on macOS with Apple Sillicon. Since the .dmg file is not signed, you will need to delete the attributes file after installing:
-          `xattr -d com.apple.quarantine /Applications/Electron\\ OAuth\\ App.app`
+          \`xattr -d com.apple.quarantine /Applications/Electron\\ OAuth\\ App.app\`
           - **Electron.OAuth.App.Setup.${VERSION}.exe**: Can be used by Windows machines with both amd64 and x86-64 architecture.
           - **Electron.OAuth.App-${VERSION}-mac.zip**: macOS application binaries.
           - **Electron.OAuth.App-${VERSION}-win.zip**: Windows application binaries.
@@ -134,7 +134,7 @@ jobs:
 
           The blockmap files are used by the auto-updater to determine which files have changed between releases. The .yml file contains the checksums for the files which is created by electron builder.
           .zip and .tar.gz archives are also included which contain the source files for the application.
-          You can use the .yml file to verify the integrity of the downloaded files using the instructions in the README.md file.
+          The .yml files can be used to verify the integrity of the downloaded files using the instructions in the README.md file.
           EOF
         env:
           TAG_NAME: ${{ github.ref }}
