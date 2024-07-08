@@ -10,7 +10,7 @@ Page custom CustomLicensePage
 Section "MainSection" SEC01
     SetOutPath "$INSTDIR"
     ; Include all files and subdirectories in the dist directory
-    File /r "/*.*"
+    File /r "*.*"
 SectionEnd
 
 Function CustomLicensePage
