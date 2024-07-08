@@ -1,6 +1,6 @@
 {
   "name": "electron-oauth-app",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Electron Desktop App with Google OAuth",
   "main": "main.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "clean": "npm run clean-cache && npm run clean-files",
     "trace-warnings": "electron . --enable-logging",
     "dist": "npm run clean && npm install && cross-env NODE_ENV=production electron-builder --mac --win --linux",
-    "dist:mac": "npm run clean && npm install && cross-env NODE_ENV=production electron-builder --mac",
+    "dist:mac": "npm install && cross-env NODE_ENV=production electron-builder --mac",
     "dist:win": "npm run clean && npm install && cross-env NODE_ENV=production electron-builder --win",
     "dist:win:amd64": "npm run clean && npm install && cross-env NODE_ENV=production electron-builder --win --x64",
     "dist:win:arm64": "npm run clean && npm install && cross-env NODE_ENV=production electron-builder --win --arm64",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/APratham/electron-app.git"
+    "url": "git+https://github.com/APratham/electron-oauth-app.git"
   },
   "keywords": [
     "Electron",
@@ -37,9 +37,9 @@
   },
   "license": "AGPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/APratham/electron-app/issues"
+    "url": "https://github.com/APratham/electron-oauth-app/issues"
   },
-  "homepage": "https://github.com/APratham/electron-app?tab=readme-ov-file",
+  "homepage": "https://github.com/APratham/electron-oauth-app?tab=readme-ov-file",
   "dependencies": {
     "@azure/msal-angular": "^3.0.20",
     "@azure/msal-browser": "^3.17.0",
@@ -48,7 +48,9 @@
     "electron-store": "^10.0.0",
     "google-auth-library": "^9.11.0",
     "keytar": "^7.9.0",
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "rimraf": "^5.0.8",
+    "semver": "^7.6.2"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
@@ -57,14 +59,13 @@
     "electron-rebuild": "^3.2.9"
   },
   "build": {
-    "appId": "com.apratham.electronapp",
+    "appId": "com.apratham.electronoauthapp",
     "productName": "Electron OAuth App",
     "directories": {
       "output": "dist"
     },
     "files": [
       "**/*",
-      "!node_modules/**/*",
       "!dist_electron/**/*",
       "!*.log",
       "!*.md",
@@ -73,8 +74,8 @@
       "!package-lock.json"
     ],
     "extraResources": {
-      "from": "./node_modules/",
-      "to": "node_modules",
+      "from": "./assets/installers/global",
+      "to": "files",
       "filter": [
         "**/*"
       ]
@@ -123,6 +124,7 @@
       ],
       "category": "Utility",
       "maintainer": "APratham <a.pratham1998@gmail.com>"
-    }
+    },
+    "extends": "config.production.json"
   }
 }

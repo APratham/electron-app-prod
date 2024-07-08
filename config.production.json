@@ -1,0 +1,67 @@
+{
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.developer-tools",
+      "icon": "assets/icons/mac/aiops.icns"
+    },
+    "dmg": {
+      "background": "assets/installers/mac/dmg-bg.png",
+      "iconSize": 128,
+      "contents": [
+        {
+          "x": 130,
+          "y": 370,
+          "type": "file"
+        },
+        {
+          "x": 500,
+          "y": 350,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "window": {
+        "width": 800,
+        "height": 500
+      }
+    },
+    "nsis": {      
+        "oneClick": false,
+        "perMachine": true,
+        "allowElevation": true,
+        "allowToChangeInstallationDirectory": true,
+        "installerIcon": "assets/icons/win/aiops.ico",
+        "uninstallerIcon": "assets/icons/win/aiops.ico",
+        "uninstallDisplayName": "Uninstall Electron OAuth App",
+        "license": "license.txt",
+        "createDesktopShortcut": true,
+        "createStartMenuShortcut": true,
+        "shortcutName": "Electron OAuth App"
+      },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "icon": "assets/icons/win/aiops.ico"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "deb",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        "AppImage"
+      ],
+      "category": "Utility",
+      "maintainer": "APratham <a.pratham1998@gmail.com>",
+      "icon": "assets/icons/linux/aiops.png"
+    }
+  }
+  
