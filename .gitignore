@@ -8,6 +8,7 @@ dist/
 out/
 
 
+
 # Ionic specific
 .sass-cache/
 .project/
@@ -26,6 +27,7 @@ logs/
 *.log
 
 # Dependency directories
+
 jspm_packages/
 bower_components/
 

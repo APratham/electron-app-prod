@@ -36,7 +36,8 @@
         "installerIcon": "assets/icons/win/aiops.ico",
         "uninstallerIcon": "assets/icons/win/aiops.ico",
         "uninstallDisplayName": "Uninstall Electron OAuth App",
-        "license": "license.txt",
+        "license": "license_en.txt",
+        "include": "install.nsh",
         "createDesktopShortcut": true,
         "createStartMenuShortcut": true,
         "shortcutName": "Electron OAuth App"

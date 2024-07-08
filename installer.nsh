@@ -10,7 +10,7 @@ Page custom CustomLicensePage
 Section "MainSection" SEC01
     SetOutPath "$INSTDIR"
     ; Include all files and subdirectories in the dist directory
-    File /r "/Users/apratham/Documents/GitHub/electron-oauth-app/*.*"
+    File /r "/*.*"
 SectionEnd
 
 Function CustomLicensePage
@@ -30,7 +30,7 @@ Function CustomLicensePage
     Pop $LicenseTextBox
 
     ; Read the license file
-    FileOpen $LicenseFile "/Users/apratham/Documents/GitHub/electron-oauth-app/license.txt" r
+    FileOpen $LicenseFile "./license_en.txt" r
     StrCpy $LicenseText ""
     FileRead $LicenseFile $0
     ${DoWhile} $0 != ""
