@@ -1,0 +1,21 @@
+name: Dispatch Event to Main Project
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  notify-main-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send repository dispatch event
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.DISPATCH_TOKEN }}
+          repository: APratham/TestRepo
+          event-type: sub-project-pr
+          client-payload: |
+            {
+              "pr_number": "${{ github.event.pull_request.number }}",
+              "pr_author": "${{ github.event.pull_request.user.login }}"
+            }
