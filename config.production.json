@@ -30,13 +30,16 @@
     },
     "nsis": {      
         "oneClick": false,
-        "perMachine": true,
-        "allowElevation": true,
+        "perMachine": false,
+        "allowElevation": false,
         "allowToChangeInstallationDirectory": true,
         "installerIcon": "assets/icons/win/aiops.ico",
         "uninstallerIcon": "assets/icons/win/aiops.ico",
         "uninstallDisplayName": "Uninstall Electron OAuth App",
-        "license": "license.txt",
+        "license": "assets/installers/win/license.txt",
+        "include": "assets/installers/win/install.nsh",
+        "installerSidebar": "assets/installers/win/installerSidebar.bmp",
+        "uninstallerSidebar": "assets/installers/win/uninstallerSidebar.bmp",
         "createDesktopShortcut": true,
         "createStartMenuShortcut": true,
         "shortcutName": "Electron OAuth App"
@@ -61,7 +64,9 @@
       ],
       "category": "Utility",
       "maintainer": "APratham <a.pratham1998@gmail.com>",
-      "icon": "assets/icons/linux/aiops.png"
+      "icon": "assets/icons/linux/aiops.png",
+      "synopsis": "OAuth Example App",
+      "description": "Electron OAuth App is an example application to demonstrate the OAuth flow in Electron using different providers."
     }
   }
   

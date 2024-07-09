@@ -16,6 +16,9 @@
     "dist:win:amd64": "npm run clean && npm install && cross-env NODE_ENV=production electron-builder --win --x64",
     "dist:win:arm64": "npm run clean && npm install && cross-env NODE_ENV=production electron-builder --win --arm64",
     "dist:linux": "npm run clean && npm install && cross-env NODE_ENV=production electron-builder --linux",
+    "release": "standard-version",
+    "postrelease": "echo 'Release script complete. Remember to manually push changes.'",
+    "bump-version": "semver -i patch package.json",
     "postinstall": "electron-builder install-app-deps",
     "rebuild-all": "electron-rebuild -f",
     "rebuild-google": "electron-rebuild -f -w google-auth-library"
@@ -44,13 +47,16 @@
     "@azure/msal-angular": "^3.0.20",
     "@azure/msal-browser": "^3.17.0",
     "@azure/msal-node": "^2.9.2",
+    "dmg-license": "^1.0.11",
     "electron-reload": "^2.0.0-alpha.1",
     "electron-store": "^10.0.0",
     "google-auth-library": "^9.11.0",
     "keytar": "^7.9.0",
+    "minimist": "^1.2.8",
     "nodemon": "^3.1.4",
     "rimraf": "^5.0.8",
-    "semver": "^7.6.2"
+    "semver": "^7.6.2",
+    "standard-version": "^9.5.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

@@ -1,0 +1,23 @@
+{
+	"$schema": "https://github.com/argv-minus-one/dmg-license/raw/master/schema.json",
+
+	"body": [
+		{
+			"lang": "en-US",
+			"type": "plain",
+			"file": "license.txt",
+			"charset": "UTF-8"
+		}
+	],
+
+	"labels": [
+		{
+			"lang": "en-US",
+			"agree": "Agree",
+			"disagree": "Disagree",
+			"print": "Print",
+			"save": "Save",
+            "message": "Please read the following license agreement carefully. You must accept the terms of this agreement before continuing with the installation."
+		}
+	]
+}
